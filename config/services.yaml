@@ -21,4 +21,7 @@ services:
             - '../src/Kernel.php'
 
     App\EventListener\ExceptionListener:
-        tags: [kernel.event_listener]   
+        tags: [kernel.event_listener]
+    
+    App\Services\Factory\CardProcessorFactory:
+        tags: ['card.processor_factory']

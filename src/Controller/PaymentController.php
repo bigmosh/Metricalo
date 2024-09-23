@@ -2,21 +2,20 @@
 namespace App\Controller;
 
 use App\Dto\CardPayDto;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\Factory\CardProcessorFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\Validator\Exception\ValidationFailedException;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Attribute\Route;
 
 class PaymentController extends AbstractController
 {
-    #[Route('/app/pay/{provider}', name: 'cardpay',  methods: ['POST'])]
-    public function processCardPayment(#[MapRequestPayload()] CardPayDto $cardPayDto, ValidatorInterface $validator, 
-     string $provider): JsonResponse
-    {
-       return $this->json([
-          'status' => $provider
-       ]);
+    #[Route('/app/pay/{provider}', name: 'cardpay', methods: ['POST'])]
+    public function processCardPayment(CardProcessorFactory $cardProcessorFactory, #[MapRequestPayload()] CardPayDto $cardPayDto,
+        string $provider): JsonResponse {
+        $provider = $cardProcessorFactory::getProvider($provider);
+        return $this->json([
+            'status' => $provider,
+        ]);
     }
 }
