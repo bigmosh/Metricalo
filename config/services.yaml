@@ -23,5 +23,8 @@ services:
     App\EventListener\ExceptionListener:
         tags: [kernel.event_listener]
     
-    App\Services\Factory\CardProcessorFactory:
+    App\Service\Factory\CardProcessorFactory:
         tags: ['card.processor_factory']
+
+    App\Service\Adapter\ICardProcessorAdapter:
+        tags: ['card.processor_adapter']
