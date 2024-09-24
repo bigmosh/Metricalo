@@ -33,4 +33,11 @@ services:
         arguments:
             $aciApiKey: '%env(ACI_PAYMENT_KEY)%'
             $aciBaseUrl: '%env(ACI_PAYMENT_URL)%'
+            $entityId: '%env(ACI_ENTITY_ID)%'
         tags: ['card.aci_payment']
+
+    App\Service\Payment\Shift4Payment:
+        arguments:
+            $shift4ApiKey: '%env(SHIFT4_API_KEY)%'
+            $shift4BaseUrl: '%env(SHIFT4_BASE_URL)%'
+        tags: ['card.shift4_payment']

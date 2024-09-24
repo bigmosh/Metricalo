@@ -8,11 +8,6 @@ use Psr\Log\LoggerInterface;
 
 class ExceptionListener
 {
-  private $logger;
-  public function __construct(LoggerInterface $logger)
-  {
-      $this->logger = $logger;
-  }
     public function __invoke(ExceptionEvent $event): void
     {
 
