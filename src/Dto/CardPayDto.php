@@ -29,15 +29,15 @@ class CardPayDto
         max: 2050,
         notInRangeMessage: "The card expiration year must be between {{ min }} and {{ max }}"
     )]
-    public int $cardExpYear;
+    public string $cardExpYear;
 
     #[Assert\NotBlank]
     #[Assert\Range(
-        min: 1,
+        min: 01,
         max: 12,
         notInRangeMessage: "The card expiration month must be between {{ min }} and {{ max }}"
     )]
-    public int $cardExpMonth;
+    public string $cardExpMonth;
 
     #[Assert\NotBlank]
     #[Assert\Length(
