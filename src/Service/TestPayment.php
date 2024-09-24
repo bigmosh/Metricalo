@@ -6,7 +6,10 @@ use App\Service\Adapter\CardPaymentResponse;
 use App\Service\Adapter\ICardProcessorAdapter;
 
 class TestPayment implements ICardProcessorAdapter{
-  public function pay(CardPaymentRequest $cardPaymentRequest): CardPaymentResponse {
+  public function getProviderName(): string {
+    return 'test';
+  }
+  public function chargeCard(CardPaymentRequest $cardPaymentRequest): CardPaymentResponse {
     return new CardPaymentResponse(
       1,
       '2024-11-1',

@@ -28,3 +28,9 @@ services:
 
     App\Service\Adapter\ICardProcessorAdapter:
         tags: ['card.processor_adapter']
+
+    App\Service\Payment\ACIPayment:
+        arguments:
+            $aciApiKey: '%env(ACI_PAYMENT_KEY)%'
+            $aciBaseUrl: '%env(ACI_PAYMENT_URL)%'
+        tags: ['card.aci_payment']

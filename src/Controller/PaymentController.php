@@ -14,11 +14,11 @@ class PaymentController extends AbstractController
     #[Route('/app/pay/{provider}', name: 'cardpay', methods: ['POST'])]
     public function processCardPayment(CardProcessorFactory $cardProcessorFactory, #[MapRequestPayload()] CardPayDto $cardPayDto,
         string $provider): JsonResponse {
-        $provider = $cardProcessorFactory::getProvider($provider);
+        $provider = $cardProcessorFactory->getProvider($provider);
 
         $cardPaymentRequest = new CardPaymentRequest($cardPayDto->cardNumber, $cardPayDto->cardExpMonth, $cardPayDto->cardExpYear, $cardPayDto->cardCvv, $cardPayDto->currency, $cardPayDto->amount);
 
-        $cardPaymentResponse = $provider->pay($cardPaymentRequest);
+        $cardPaymentResponse = $provider->chargeCard($cardPaymentRequest);
         return $this->json($cardPaymentResponse);
     }
 }

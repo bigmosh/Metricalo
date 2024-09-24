@@ -1,23 +1,27 @@
 <?php
 namespace App\Service\Factory;
 
-use App\Service\Adapter\ICardProcessorAdapter;
-use App\Service\TestPayment;
 use InvalidArgumentException;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class CardProcessorFactory
 {
-    private static $providerMappings = [
-        'test' => TestPayment::class
-    ];
 
-    public static function getProvider(string $provider): ICardProcessorAdapter
-    {
-        if (array_key_exists($provider, self::$providerMappings)) {
-            $providerClass = self::$providerMappings[$provider];
-            return new $providerClass();
-        }
-
-        throw new InvalidArgumentException("Invalid system parameter: " . $provider);
+    public function __construct(
+        #[AutowireIterator('card_payment_providers')]
+        private iterable $cardPaymentProviders
+    ) {
     }
+
+    public function getProvider(string $providerName)
+    {
+        foreach ($this->cardPaymentProviders as $paymentProvider) {
+            if ($paymentProvider->getProviderName() === $providerName) {
+                return $paymentProvider;
+            }
+        }
+        throw new InvalidArgumentException("Invalid system parameter: " . $providerName);
+
+    }
+
 }

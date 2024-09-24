@@ -1,6 +1,8 @@
 <?php
 namespace App\Service\Adapter;
 
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
 class CardPaymentRequest
 {
     public string $cardNumber;
@@ -38,7 +40,9 @@ class CardPaymentResponse
   }
 }
 
+#[AutoconfigureTag(name: 'card_payment_providers')]
 interface ICardProcessorAdapter
-{
-    public function pay(CardPaymentRequest $cardPaymentObject): CardPaymentResponse;
+{ 
+    public function getProviderName(): string;
+    public function chargeCard(CardPaymentRequest $cardPaymentObject): CardPaymentResponse;
 }
