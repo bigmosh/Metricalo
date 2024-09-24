@@ -22,7 +22,8 @@ class ExceptionListener
         $customErrorResponse = [];
         if ($previousException instanceof ValidationFailedException) {
           $customErrorResponse['message'] = 'Validation failed'; 
-          $customErrorResponse['code'] = JsonResponse::HTTP_BAD_REQUEST;  
+          $customErrorResponse['code'] = JsonResponse::HTTP_BAD_REQUEST; 
+          /** @var ConstraintViolationListInterface $violations */ 
           $customErrorResponse['errors'] = $previousException->getViolations() ;
         }
 

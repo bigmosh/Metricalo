@@ -76,9 +76,11 @@ class Shift4Payment implements ICardProcessorAdapter
       ]);
 
       $result = json_decode($response->getContent(false), true);
+      $this->logger->info(json_encode($result));
 
        if ($response->getStatusCode() !== 200) {
-            throw new \Exception('Error: ' . $result['result']['description']);
+        $this->logger->info(json_encode($result));
+            throw new \Exception('Error: ' . json_encode($result));
        }
 
        return $result;
